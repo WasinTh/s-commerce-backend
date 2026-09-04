@@ -73,10 +73,14 @@ class Order(models.Model):
 
     @property
     def total_price(self):
-        total_price = 0
-        for item in self.items.all():
-            total_price += item.price * item.quantity
-        return total_price
+        return self.items.aggregate(
+            total_price=models.Sum(models.F('price') * models.F('quantity'))
+        )['total_price']
+
+        #total_price = 0
+        #for item in self.items.all():
+        #    total_price += item.price * item.quantity
+        #return total_price
 
 
 class OrderItem(models.Model):
