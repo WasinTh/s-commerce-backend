@@ -69,7 +69,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.cart.member} - {sefl.total_price}"
+        return f"{self.cart.member} - {self.total_price} ({self.items.count()})"
 
     @property
     def total_price(self):
